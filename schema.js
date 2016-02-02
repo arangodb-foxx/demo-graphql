@@ -22,6 +22,24 @@ const appearsIn = applicationContext.collection('appearsIn');
 
 let droidType, humanType, characterInterface;
 
+// GraphQL ENUM values can be used as literals rather
+// than strings but their possible values have to be
+// statically defined.
+const speciesType = new gql.GraphQLEnumType({
+  name: 'Species',
+  description: 'Species of a character: human or droid.',
+  values: {
+    HUMAN: {
+      value: 'human', // The internal value stored in ArangoDB
+      description: 'A humanoid creature in the Star Wars universe.'
+    },
+    DROID: {
+      value: 'droid',
+      description: 'A mechanical creature in the Star Wars universe.'
+    }
+  }
+});
+
 // In the original graphql-js test fixtures episodes
 // are defined using a GraphQL ENUM type. Because we're
 // in a database, it makes more sense to define them
@@ -68,6 +86,10 @@ characterInterface = new gql.GraphQLInterfaceType({
         type: new gql.GraphQLNonNull(gql.GraphQLString),
         description: 'The id of the character.'
       },
+      species: {
+        type: new gql.GraphQLNonNull(speciesType),
+        description: 'The species of the character.'
+      },
       name: {
         type: gql.GraphQLString,
         description: 'The name of the character.'
@@ -77,7 +99,13 @@ characterInterface = new gql.GraphQLInterfaceType({
         description: (
           'The friends of the character, '
           + 'or an empty list if they have none.'
-        )
+        ),
+        args: {
+          species: {
+            type: speciesType,
+            description: 'The species of the friends.'
+          }
+        }
       },
       appearsIn: {
         type: new gql.GraphQLList(episodeType),
@@ -105,6 +133,13 @@ humanType = new gql.GraphQLObjectType({
           return human._key;
         }
       },
+      species: {
+        type: new gql.GraphQLNonNull(speciesType),
+        description: 'The species of the human.',
+        resolve(human) {
+          return human.$type;
+        }
+      },
       name: {
         type: gql.GraphQLString,
         description: 'The name of the human.'
@@ -112,13 +147,21 @@ humanType = new gql.GraphQLObjectType({
       friends: {
         type: new gql.GraphQLList(characterInterface),
         description: 'The friends of the human, or an empty list if they have none.',
-        resolve(human) {
+        args: {
+          species: {
+            type: speciesType,
+            description: 'The species of the friends.'
+          }
+        },
+        resolve(human, args) {
           // We want to store friendship relations as edges in an
           // edge collection. Here we're returning the friends of
           // a character with an AQL graph traversal query, see
           // https://docs.arangodb.com/Aql/GraphTraversals.html#working-on-collection-sets
+          const species = args.species || null;
           return db._query(aqlQuery`
-            FOR friend IN ANY ${human._id} ${friends}
+            FOR friend IN ANY ${human} ${friends}
+            FILTER !${species} || friend.$type == ${species}
             SORT friend._key ASC
             RETURN friend
           `).toArray();
@@ -165,6 +208,13 @@ droidType = new gql.GraphQLObjectType({
           return droid._key;
         }
       },
+      species: {
+        type: new gql.GraphQLNonNull(speciesType),
+        description: 'The species of the droid.',
+        resolve(droid) {
+          return droid.$type;
+        }
+      },
       name: {
         type: gql.GraphQLString,
         description: 'The name of the droid.'
@@ -172,9 +222,17 @@ droidType = new gql.GraphQLObjectType({
       friends: {
         type: new gql.GraphQLList(characterInterface),
         description: 'The friends of the droid, or an empty list if they have none.',
-        resolve(droid) {
+        args: {
+          species: {
+            type: speciesType,
+            description: 'The species of the friends.'
+          }
+        },
+        resolve(droid, args) {
+          const species = args.species || null;
           return db._query(aqlQuery`
-            FOR friend IN ANY ${droid._id} ${friends}
+            FOR friend IN ANY ${human} ${friends}
+            FILTER !${species} || friend.$type == ${species}
             SORT friend._key ASC
             RETURN friend
           `).toArray();

@@ -17,6 +17,9 @@ GraphQL Star Wars data set, e.g.:
 {
   hero(episode: "NewHope") {
     name
+    friends(species: DROID) {
+      name
+    }
   }
 }
 ```
@@ -27,7 +30,15 @@ returns:
 {
   "data": {
     "hero": {
-      "name": "Luke Skywalker"
+      "name": "Luke Skywalker",
+      "friends": [
+        {
+          "name": "C-3PO"
+        },
+        {
+          "name": "R2-D2"
+        }
+      ]
     }
   }
 }
