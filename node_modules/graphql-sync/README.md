@@ -6,10 +6,13 @@ This is a promise-free wrapper of [GraphQL.js](https://github.com/graphql/graphq
 
 An overview of GraphQL in general is available in the
 [README](https://github.com/facebook/graphql/blob/master/README.md) for the
-[Specification for GraphQL](https://github.com/facebook/graphql). That overview
-describes a simple set of GraphQL examples that exist as [tests](src/__tests__)
-in this repository. A good way to get started with this repository is to walk
-through that README and the corresponding tests in parallel.
+[Specification for GraphQL](https://github.com/facebook/graphql).
+
+### ArangoDB example
+
+You can use GraphQL-sync in [ArangoDB](https://www.arangdb.com) to build your own GraphQL endpoints directly inside the database using the [Foxx](https://www.arangodb.com/foxx) framework.
+
+An example Foxx service using GraphQL-sync is available as [demo-graphql](https://github.com/arangodb-foxx/demo-graphql) in the Foxx service store. You can find out more about using GraphQL with Foxx in the ArangoDB blog article [*Using GraphQL with NoSQL database ArangoDB*](https://www.arangodb.com/2016/02/using-graphql-nosql-database-arangodb/).
 
 ### Using GraphQL-sync
 
@@ -48,8 +51,8 @@ var schema = new GraphQLSchema({
 ```
 
 This defines a simple schema with one type and one field, that resolves
-to a fixed value. A more complex example is included in the top level
-[tests](src/__tests__) directory.
+to a fixed value. The `resolve` function can return a value, a promise,
+or an array of promises.
 
 Then, serve the result of a query against that type schema.
 
@@ -57,6 +60,7 @@ Then, serve the result of a query against that type schema.
 var query = '{ hello }';
 
 var result = graphql(schema, query);
+
 // Prints
 // {
 //   data: { hello: "world" }
@@ -72,6 +76,7 @@ it, reporting errors otherwise.
 var query = '{ boyhowdy }';
 
 var result = graphql(schema, query);
+
 // Prints
 // {
 //   errors: [
