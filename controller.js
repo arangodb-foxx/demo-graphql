@@ -2,6 +2,7 @@
 const Foxx = require('org/arangodb/foxx');
 const schema = require('./schema');
 const graphql = require('graphql-sync').graphql;
+const formatError = require('graphql-sync').formatError;
 
 const ctrl = new Foxx.Controller(applicationContext);
 
@@ -17,7 +18,9 @@ ctrl.post('/graphql', function (req, res) {
   if (result.errors) {
     res.status(400);
     res.json({
-      errors: result.errors
+      errors: result.errors.map(function (error) {
+        return formatError(error);
+      })
     });
   } else {
     res.json(result);
