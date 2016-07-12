@@ -1,6 +1,6 @@
 {
   "name": "demo-graphql",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "GraphQL Foxx Demo",
   "engines": {
     "arangodb": "^2.8.0"
