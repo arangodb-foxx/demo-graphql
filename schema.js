@@ -231,7 +231,7 @@ droidType = new gql.GraphQLObjectType({
         resolve(droid, args) {
           const species = args.species || null;
           return db._query(aqlQuery`
-            FOR friend IN ANY ${human} ${friends}
+            FOR friend IN ANY ${droid} ${friends}
             FILTER !${species} || friend.$type == ${species}
             SORT friend._key ASC
             RETURN friend
