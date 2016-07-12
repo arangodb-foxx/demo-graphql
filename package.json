@@ -1,6 +1,0 @@
-{
-  "private": true,
-  "dependencies": {
-    "graphql-sync": "0.5.0-sync.2"
-  }
-}

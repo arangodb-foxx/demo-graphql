@@ -1,11 +1,11 @@
 'use strict';
-const db = require('org/arangodb').db;
+const db = require('@arangodb').db;
 
 // Based on the GraphQL-js Star Wars test fixtures available at
 // https://github.com/graphql/graphql-js/blob/v0.4.14/src/__tests__/starWarsData.js
 // https://github.com/graphql/graphql-js/blob/v0.4.14/src/__tests__/starWarsSchema.js
 
-const episodesCollectionName = applicationContext.collectionName('episodes');
+const episodesCollectionName = module.context.collectionName('episodes');
 if (!db._collection(episodesCollectionName)) {
   const episodes = db._createDocumentCollection(episodesCollectionName);
   [
@@ -16,11 +16,11 @@ if (!db._collection(episodesCollectionName)) {
   ].forEach(function (episode) {
     episodes.save(episode);
   });
-} else if (applicationContext.isProduction) {
+} else if (module.context.isProduction) {
   console.warn(`collection ${episodesCollectionName} already exists. Leaving it untouched.`);
 }
 
-const charactersCollectionName = applicationContext.collectionName('characters');
+const charactersCollectionName = module.context.collectionName('characters');
 if (!db._collection(charactersCollectionName)) {
   const characters = db._createDocumentCollection(charactersCollectionName);
   characters.ensureSkiplist('$type');
@@ -39,11 +39,11 @@ if (!db._collection(charactersCollectionName)) {
   ].forEach(function (character) {
     characters.save(character);
   });
-} else if (applicationContext.isProduction) {
+} else if (module.context.isProduction) {
   console.warn(`collection ${charactersCollectionName} already exists. Leaving it untouched.`);
 }
 
-const friendsCollectionName = applicationContext.collectionName('friends');
+const friendsCollectionName = module.context.collectionName('friends');
 if (!db._collection(friendsCollectionName)) {
   const friends = db._createEdgeCollection(friendsCollectionName);
   [
@@ -62,11 +62,11 @@ if (!db._collection(friendsCollectionName)) {
       {}
     );
   });
-} else if (applicationContext.isProduction) {
+} else if (module.context.isProduction) {
   console.warn(`collection ${friendsCollectionName} already exists. Leaving it untouched.`);
 }
 
-const appearsInCollectionName = applicationContext.collectionName('appearsIn');
+const appearsInCollectionName = module.context.collectionName('appearsIn');
 if (!db._collection(appearsInCollectionName)) {
   const appearsIn = db._createEdgeCollection(appearsInCollectionName);
   [
@@ -90,6 +90,6 @@ if (!db._collection(appearsInCollectionName)) {
       );
     });
   });
-} else if (applicationContext.isProduction) {
+} else if (module.context.isProduction) {
   console.warn(`collection ${appearsInCollectionName} already exists. Leaving it untouched.`);
 }

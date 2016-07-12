@@ -3,11 +3,11 @@
   "version": "1.2.2",
   "description": "GraphQL Foxx Demo",
   "engines": {
-    "arangodb": "^2.8.0"
+    "arangodb": "^3.1.0"
   },
   "author": "Alan Plum",
   "license": "Apache 2",
-  "controllers": "controller.js",
+  "main": "index.js",
   "scripts": {
     "setup": "scripts/setup.js",
     "teardown": "scripts/teardown.js"

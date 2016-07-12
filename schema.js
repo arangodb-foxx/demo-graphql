@@ -8,17 +8,17 @@ const gql = require('graphql-sync');
 // make sure to install it in the Foxx service's folder using
 // the "npm" command-line tool and to include the "node_modules"
 // folder when bundling your Foxx service for deployment.
-const db = require('org/arangodb').db;
+const db = require('@arangodb').db;
 
-// Using applicationContext.collection allows us to use the
+// Using module.context.collection allows us to use the
 // collection with a common prefix based on where the service
 // is mounted. This way we can have multiple copies of this
 // service mounted on the same database without worrying about
 // name conflicts in their collections.
-const episodes = applicationContext.collection('episodes');
-const characters = applicationContext.collection('characters');
-const friends = applicationContext.collection('friends');
-const appearsIn = applicationContext.collection('appearsIn');
+const episodes = module.context.collection('episodes');
+const characters = module.context.collection('characters');
+const friends = module.context.collection('friends');
+const appearsIn = module.context.collection('appearsIn');
 
 let droidType, humanType, characterInterface;
 

@@ -1,7 +1,7 @@
 'use strict';
-const db = require('org/arangodb').db;
+const db = require('@arangodb').db;
 
-db._drop(applicationContext.collectionName('episodes'));
-db._drop(applicationContext.collectionName('characters'));
-db._drop(applicationContext.collectionName('friends'));
-db._drop(applicationContext.collectionName('appearsIn'));
+db._drop(module.context.collectionName('episodes'));
+db._drop(module.context.collectionName('characters'));
+db._drop(module.context.collectionName('friends'));
+db._drop(module.context.collectionName('appearsIn'));
