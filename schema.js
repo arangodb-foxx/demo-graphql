@@ -286,9 +286,9 @@ const queryType = new gql.GraphQLObjectType({
           }
         },
         resolve(root, args) {
-          // We're using firstExample to make sure we only
+          // We're using resolveType to make sure we only
           // return documents with the right "$type".
-          return characters.firstExample({
+          return characters.resolveType({
             _key: args.id,
             $type: 'human'
           });
@@ -303,7 +303,7 @@ const queryType = new gql.GraphQLObjectType({
           }
         },
         resolve(root, args) {
-          return characters.firstExample({
+          return characters.resolveType({
             _key: args.id,
             $type: 'droid'
           });
