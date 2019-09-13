@@ -160,7 +160,7 @@ humanType = new gql.GraphQLObjectType({
           // https://docs.arangodb.com/Aql/GraphTraversals.html#working-on-collection-sets
           const species = args.species || null;
           return db._query(aqlQuery`
-            WITH graphql_characters
+            WITH ${characters}
             FOR friend IN ANY ${human} ${friends}
             FILTER !${species} || friend.$type == ${species}
             SORT friend._key ASC
@@ -178,7 +178,7 @@ humanType = new gql.GraphQLObjectType({
           // appear in a character), so we are only interested
           // in OUTBOUND edges.
           return db._query(aqlQuery`
-            WITH graphql_characters
+            WITH ${characters}
             FOR episode IN OUTBOUND ${human._id} ${appearsIn}
             SORT episode._key ASC
             RETURN episode
@@ -233,7 +233,7 @@ droidType = new gql.GraphQLObjectType({
         resolve(droid, args) {
           const species = args.species || null;
           return db._query(aqlQuery`
-            WITH graphql_characters
+            WITH ${characters}
             FOR friend IN ANY ${droid} ${friends}
             FILTER !${species} || friend.$type == ${species}
             SORT friend._key ASC
