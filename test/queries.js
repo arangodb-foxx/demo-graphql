@@ -1,7 +1,7 @@
 'use strict';
 const expect = require('chai').expect;
 const schema = require('../schema');
-const graphql = require('graphql-sync').graphql;
+const graphql = require('graphql').graphql;
 
 describe('Star Wars Query Tests', function () {
   describe('Basic Queries', function () {

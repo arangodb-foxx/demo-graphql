@@ -1,10 +1,9 @@
 'use strict';
 const expect = require('chai').expect;
 const schema = require('../schema');
-const graphql = require('graphql-sync').graphql;
-const Source = require('graphql-sync/node_modules/graphql/language/source').Source;
-const parse = require('graphql-sync/node_modules/graphql/language/parser').parse;
-const validate = require('graphql-sync/node_modules/graphql/validation/validate').validate;
+const Source = require('graphql/node_modules/graphql/language/source').Source;
+const parse = require('graphql/node_modules/graphql/language/parser').parse;
+const validate = require('graphql/node_modules/graphql/validation/validate').validate;
 
 function validationErrors(query) {
   const source = new Source(query, 'StarWars.graphql');

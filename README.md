@@ -1,8 +1,8 @@
 # GraphQL Demo Foxx Service
 
-This is a GraphQL demo service for ArangoDB 3.1 and higher
-using the [graphql-sync wrapper for graphql-js](https://github.com/arangodb/graphql-sync)
-and the [Foxx GraphQL extensions for ArangoDB](https://www.arangodb.com/docs/stable/foxx-reference-modules-graph-ql.html).
+This is a GraphQL demo service for ArangoDB 3.11 and higher
+using [graphql-js](https://github.com/graphql/graphql-js)
+and the [Foxx GraphQL extensions for ArangoDB](https://docs.arangodb.com/stable/develop/foxx-microservices/reference/related-modules/graphql/).
 
 This service implements two API endpoints:
 

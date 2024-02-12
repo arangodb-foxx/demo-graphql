@@ -1,13 +1,8 @@
 'use strict';
-// The graphql-sync module is a thin wrapper around graphql-js
-// which provides an identical API except it doesn't use promises
-// and instead always resolves synchronously. This allows us to
-// use it in Foxx (which doesn't support async resolution).
-const gql = require('graphql-sync');
-// If you want to use graphql-sync in your own Foxx services
-// make sure to install it in the Foxx service's folder using
+// Make sure to install "graphql" in the Foxx service's folder using
 // the "npm" command-line tool and to include the "node_modules"
 // folder when bundling your Foxx service for deployment.
+const gql = require('graphql');
 const db = require('@arangodb').db;
 
 // Using module.context.collection allows us to use the
