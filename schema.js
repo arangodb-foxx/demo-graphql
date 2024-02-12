@@ -241,6 +241,7 @@ droidType = new gql.GraphQLObjectType({
         description: 'Which movies they appear in.',
         resolve(droid) {
           return db._query(aqlQuery`
+            WITH ${characters}
             FOR episode IN OUTBOUND ${droid._id} ${appearsIn}
             SORT episode._key ASC
             RETURN episode
